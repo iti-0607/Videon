@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { createServer } from "node:http";
 
@@ -17,8 +19,7 @@ app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended:true }))
 
 const start = async () => {
-    const connectionDb = await mongoose.connect("mongodb+srv://videoDB:VIDEOdb%40123@cluster0.rihno00.mongodb.net/");
-
+    const connectionDb = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MONGO Connected DB Host: ${connectionDb.connection.host}`);
     server.listen(app.get("port"), () => {
         console.log("Listening on port 8000");
